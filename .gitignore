@@ -1,0 +1,10 @@
+*figs
+*report*pdf
+*log
+*aux
+*fls
+*out
+*gz
+*latexmk
+
+.idea
