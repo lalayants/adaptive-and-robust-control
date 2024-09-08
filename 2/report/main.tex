@@ -56,49 +56,49 @@ $$
     \delta(t) = (1 + t)^{-1/8}\Big[1 - \theta(1+t)^{-1/4} - \dfrac{3}{8}(1+t)^{-5/4}\Big]
 $$
 
-При моделировании использовались следующие значения параметров: $\gamma = 0.25$, $x(0) = 1$, $\hat \theta(0) = 1$, $\lambda = 2$. Сигнал $g(t)$ был принят равным нулю. Полученный результат представлен на рис. {1 - 6}. \\
+При моделировании использовались следующие значения параметров: $\gamma = 0.25$, $x(0) = 1$, $\hat \theta(0) = 1$, $\lambda = 2$. Сигнал $g(t)$ был принят равным нулю. Полученный результат представлен на рис. \ref{fig:1_epsilon} - \ref{fig:1_small_theta_e}. \\
 C течением времени ошибка слежения и выход регулятора стремятся к ограниченному множеству, в то время как ошибка оценки параметра $\theta$ линейно растет, что видно на рис. 6. Это соответствует теоретическому предположению $\hat \theta = Ct$.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/1_epsilon.png}
   \caption{График ошибки слежения адаптивной системы управления с внешним возмущением} 
-  \label{fig:task1_y}
+  \label{fig:1_epsilon}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/1_epsilon_small.png}
   \caption{График ошибки слежения адаптивной системы управления с внешним возмущением на последних 20 секундах моделирования} 
-  \label{fig:task1_y}
+  \label{fig:1_epsilon_small}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/1_u.png}
   \caption{График выхода регулятора адаптивной системы управления с внешним возмущением} 
-  \label{fig:task1_y}
+  \label{fig:1_u}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/1_u_small.png}
   \caption{График выхода регулятора адаптивной системы управления с внешним возмущением на последних 20 секундах моделирования} 
-  \label{fig:task1_y}
+  \label{fig:1_u_small}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/1_big_theta_e.png}
   \caption{График ошибки оценки параметра $\theta$ адаптивной системы управления с внешним возмущением} 
-  \label{fig:task1_y}
+  \label{fig:1_big_theta_e}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/1_small_theta_e.png}
   \caption{График ошибки оценки параметра $\theta$ адаптивной системы управления с внешним возмущением на последних 20 секундах моделирования} 
-  \label{fig:task1_y}
+  \label{fig:1_small_theta_e}
 \end{figure}
 \FloatBarrier
 \subsection{Статическая обратная связь}
@@ -115,7 +115,7 @@ C течением времени ошибка слежения и выход р
 
 В этой задаче, для обеспечения ограниченности всех сигналов и робастности к внешнему возмущению используется используется модификация адаптивной системы. Данный алгоритм является статическим и нелинейным и гарантирует ограниченность сигналов $\varepsilon$ и $\hat \theta$.
 
-При моделировании использовались следующие значения параметров: набор $\gamma = \{0.25, 100, 1000\}$, $x_0$ = 1, $\lambda$ = 2, $g(t) = \cos(4t)$. Полученный результат представлен на рис. 7-10.
+При моделировании использовались следующие значения параметров: набор $\gamma = \{0.25, 100, 1000\}$, $x_0$ = 1, $\lambda$ = 2, $g(t) = \cos(4t)$. Полученный результат представлен на рис. \ref{fig:2_epsilon}-\ref{fig:2_u_small}.
 
 Видно, что ошибка и выходное воздействие ограничены (для наглядности также добавлены графики последних 20 секунд моделирования), причем, чем больше значение $\gamma$, тем меньше ошибка.
 
@@ -129,28 +129,28 @@ C течением времени ошибка слежения и выход р
   \centering
   \includegraphics[width=0.65\textwidth]{figs/2_epsilon.png}
   \caption{График ошибки слежения системы со статической обратной связью} 
-  \label{fig:task1_y}
+  \label{fig:2_epsilon}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/2_epsilon_small.png}
   \caption{График ошибки слежения системы со статической обратной связью на последних 20 секундах моделирования} 
-  \label{fig:task1_y}
+  \label{fig:2_epsilon_small}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/2_u.png}
   \caption{График выхода регулятора системы со статической обратной связью} 
-  \label{fig:task1_y}
+  \label{fig:2_u}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/2_u_small.png}
   \caption{График выхода регулятора системы со статической обратной связью на последних 20 секундах моделирования} 
-  \label{fig:task1_y}
+  \label{fig:2_u_small}
 \end{figure}
 
 \FloatBarrier
@@ -168,7 +168,7 @@ C течением времени ошибка слежения и выход р
 \end{cases}
 \end{center} \\
 
-При моделировании использовались следующие значения параметров: $\gamma = 0.25$, набор $\sigma = \{0, 0.1, 1\}$, $x_0 = 1$, $\lambda = 2$, $g(t) = \cos(4t)$. Полученный результат представлен на рис. 11-12.
+При моделировании использовались следующие значения параметров: $\gamma = 0.25$, набор $\sigma = \{0, 0.1, 1\}$, $x_0 = 1$, $\lambda = 2$, $g(t) = \cos(4t)$. Полученный результат представлен на рис. \ref{fig:3_epsilon}-\ref{fig:3_u}.
 
 Видно, что при уменьшении $\sigma$, уменьшается верхняя граница ошибки.
 
@@ -176,14 +176,14 @@ C течением времени ошибка слежения и выход р
   \centering
   \includegraphics[width=0.65\textwidth]{figs/3_epsilon.png}
   \caption{График ошибки слежения системы c робастной $\sigma$-модификацией алгоритма адаптации} 
-  \label{fig:task1_y}
+  \label{fig:3_epsilon}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.65\textwidth]{figs/3_u.png}
   \caption{График выхода регулятора системы c робастной $\sigma$-модификацией алгоритма адаптации} 
-  \label{fig:task1_y}
+  \label{fig:3_u}
 \end{figure}
 
 \FloatBarrier
