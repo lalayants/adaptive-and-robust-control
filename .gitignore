@@ -6,5 +6,9 @@
 *out
 *gz
 *latexmk
+*slxc
+*asv
+*csv
+*slprj
 
 .idea
