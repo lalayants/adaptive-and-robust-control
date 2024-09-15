@@ -11,7 +11,7 @@ b = [b_1; b_0];
 C = [1 0];
 theta = [k_0-a_0; k_1-a_1; b_0; b_1];
 A_0 = [-k_1 1; -k_0 0];
-gamma = 0.1;
+gamma = 0.25;
 
 out = sim('scheme_u1.slx', 500);
 result=[out.ex_norm.Time, out.ex_norm.Data];
