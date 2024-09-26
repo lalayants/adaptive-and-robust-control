@@ -14,13 +14,15 @@ gamma = 0.25;
 
 ss_obj = ss(tf([b_0], [1, a_1, a_0]));
 if rank(ctrb(ss_obj)) == 2
+    disp('Controllable, U =');
     disp(ctrb(ss_obj))
-    disp('Controllable')
 end
 if rank(obsv(ss_obj)) == 2
+    disp('Observable, V =');
     disp(obsv(ss_obj))
-    disp('Observable')
 end
+disp('Poles: ');
+disp(pole(ss_obj));
 
 % for gamma = [0.1, 1e2, 1e4]
 %    out = sim('model_0.slx', 1000);

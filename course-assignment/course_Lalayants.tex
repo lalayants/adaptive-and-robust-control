@@ -13,8 +13,8 @@
 \graphicspath{ {./figs/} }
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 \renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter
-\title{Адаптивное и робастное управление \\ Работа №2 \\ Отчет В-17} % Title
-\author{Кирилл Лалаянц \\ Егор Прокопов} % Author name
+\title{Адаптивное и робастное управление \\ Курсовая работа\\ В-1} % Title
+\author{Кирилл Лалаянц} % Author name
 \date{\today} % Date for the report
 
 \begin{document}
@@ -26,7 +26,7 @@
 %Date Performed: & January 1, 2012 \\ % Date the experiment was performed
 % Выполнили: & Кирилл Лалаянц \\ % Partner names
 % &Прокопов Егор \\
-Преподаватель: & Козачёк О.А. % Instructor/supervisor
+Преподаватель: & Герасимов Д.Н. % Instructor/supervisor
 \end{tabular}
 \end{center}
 \newpage
@@ -96,7 +96,13 @@
 Статическая модель расширенной ошибки:
 \[\hat \varepsilon = \bar \omega_p^T \hat{\psi}_p =  \varepsilon - \hat{\psi}_p^T \bar \omega_p + \frac{1}{K_M(s)}[ \hat{\psi}_p^T \omega_p]\]
 
-
+Градиентный АА:
+\[\dot {\hat{\psi}}_p^T = \gamma \Gamma \frac{\bar \omega_p}{1 + \bar \omega_p^T \bar \omega_p} \hat \varepsilon\]
+Модифицированный АА:
+\[\dot {\hat{\psi}}_p^T = \gamma \Xi^T (\Xi_\varepsilon + \Xi_{\hat{\psi}_p} - \Xi \hat{\psi}_p)\]
+\[\Xi = [H_1(s)[\omega]~\dots~H_q(s)[\omega]]^T\]
+\[\Xi_\varepsilon = [H_1(s)[\varepsilon]~\dots~H_q(s)[\varepsilon]]^T\]
+\[\Xi_{\hat{\psi}_p}  = [H_1(s)[\omega^T \hat{\psi}_p ]~\dots~H_q(s)[\omega^T \hat{\psi}_p ]]^T\]
 
 % \begin{figure}[h!]
 %   \centering
