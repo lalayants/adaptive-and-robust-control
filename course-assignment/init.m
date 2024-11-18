@@ -1,17 +1,18 @@
 clear;
-a_0 = -3;
 a_1 = 2;
+a_0 = -3;
 b_0 = 2;
 
 k_M_1 = 5;
 k_M_0 = 6;
 
-k_0 = 1;
+b_M_0 = 1;
 
-Lambda = -k_0;
-gamma = 22;
-init_ss = 1;
-[Ass, Bss, Css, Dss] = tf2ss(b_0,[1, a_1, a_0]);
+Lambda = -b_0;
+mu_1 = 1;
+mu_2 = 2;
+mu_3 = 3;
+gamma_0 = diag([1 1 1 0.01]) * 10000;
 
 ss_obj = ss(tf([b_0], [1, a_1, a_0]));
 if rank(ctrb(ss_obj)) == 2
