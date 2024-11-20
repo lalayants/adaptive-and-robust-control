@@ -1,0 +1,184 @@
+\documentclass{article}
+
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{amsmath} % Required for some math elements
+\usepackage{hyperref}
+\usepackage[numbers,sort]{natbib}
+\usepackage[russian,english]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage{placeins}
+\usepackage{hyperref}
+\usepackage[figurename=Рисунок]{caption}
+\usepackage{ dsfont }
+\graphicspath{ {./figs/} }
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter
+\title{Адаптивное и робастное управление \\ Курсовая работа\\ В-1} % Title
+\author{Кирилл Лалаянц} % Author name
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+\begin{center}
+\begin{tabular}{l r}
+%Date Performed: & January 1, 2012 \\ % Date the experiment was performed
+% Выполнили: & Кирилл Лалаянц \\ % Partner names
+% &Прокопов Егор \\
+Преподаватель: & Козачёк О.А. % Instructor/supervisor
+\end{tabular}
+\end{center}
+\newpage
+% \begin{abstract}
+% Abstract text
+% \end{abstract}
+
+\section{Цель работы}
+
+Синтез закона адаптивного управления с использованием метода расширенной ошибки и схемы Лайона, обеспечивающего
+ограниченность всех сигналов и слежение выхода объекта за эталонным
+сигналом так, чтобы:
+\[\lim_{t \rightarrow \infty}(y_M(t) - y(t)) = 0\]
+Выход эталонного объекта \(y_M(t)\):
+\[y_M(t) = \frac{1}{K_M(s)}[g(t)]=  \frac{1}{s^2 + 5s + 6}[g(t)]\]
+Выход объекта \(y(t)\):
+\[y(t) = \frac{b_0}{s^2 + a_1 s + a_0}[u]\]
+
+Вариант 1: 
+\begin{itemize}
+  \item \(a_1 = 2\); \(a_0 = -3\);
+  \item \(b_0 = 2\);
+  \item \(g(t) = 7 \cos(3t + 2) + 8\)
+\end{itemize}
+
+
+\section{Выполнение}
+\subsection{Проверка объекта управления на свойства полной управляемости и наблюдаемости.}
+\[U = \begin{pmatrix}
+  1 & -2 \\
+  0 & 2
+\end{pmatrix} \rightarrow \text{полностью управляемая}\]
+\[V = \begin{pmatrix}
+  0 & 1 \\
+  2 & 0
+\end{pmatrix} \rightarrow \text{полностью наблюдаемая}\]
+
+\subsection{Проверка объекта управления на устойчивость и минимально-фазовость}
+Для проверки системы на устойчивость найдем полюса знаменателя её передаточной функции \(W(s)\):
+\[\text{pole(W(s)) } = [-3, 1] \rightarrow \text{ неустойчивая и не минимально-фазовая}\]
+
+\subsection{Определение и реализация требуемых компонентов системы}
+Выберем фильтры:
+\[\dot \nu_1 = \Lambda \nu_1 + e_{n-1}u\]
+\[\dot \nu_2 = \Lambda \nu_2 + e_{n-1}y\]
+гдe \(e_{n-1} = [0 \hdots 1]^T \in \mathds{R}^{n-1}\); \(\nu_1, \nu_2 \in \mathds{R}^{n-1}\).
+\[\Lambda = \begin{bmatrix}
+  0 & 1 & \hdots & 0 \\
+  \vdots & \vdots & \ddots & \vdots \\
+  0 & 0 & \hdots & 1 \\
+  -k_0 & -k_1 \hdots & k_{n- 2}
+\end{bmatrix} \in \mathds{R}^{(n-1) \times (n-1)} \]
+
+Для данного объекта \(n=2\). Следовательно:
+\[\dot \nu_1 = -k_0 \nu_1 + u\]
+\[\dot \nu_2 = -k_0 \nu_2 + y\]
+
+Зададим вектора:
+\[\omega = [\nu_1^T~\nu_2^T~y]^T\]
+\[\varphi= -[\omega^T~u]^T\]
+\[\bar \varphi= \frac{1}{K_M(s)}[\varphi]\]
+\[\hat{\psi}^T = [\tilde \theta ~~ \tilde b_m] \]
+
+Закон управления:
+\[u = \frac{1}{\hat b_{M_0}}(-\theta^T \omega + b_{M_0} g(t)) \]
+
+Статическая модель расширенной ошибки:
+\[\hat \varepsilon = \bar \varphi^T \tilde \psi =  \varepsilon - \hat{\psi}_p^T \bar \varphi + \frac{1}{K_M(s)}[ \hat{\psi}^T \varphi]\]
+
+Градиентный АА:
+\[\dot {\hat{\psi}}_p^T = \gamma \Gamma \frac{\bar \varphi}{1 + \bar \varphi^T \bar \varphi} \hat \varepsilon\]
+Модифицированный АА (Схема Лайона):
+\[\bar y = \bar \varphi^T \psi\]
+\[Y = [\bar y~H_1(s)[\bar y]~H_2(s)[\bar y]~H_3(s)[\bar y]]^T;~~W^T = [\bar \varphi^T~H_1(s)[\bar \varphi^T]~H_2(s)[\bar \varphi^T]~H_3(s)[\bar \varphi^T]]^T\]
+\[Y = W \psi\]
+\[E = Y - W \psi\]
+\[\dot {\hat{\psi}} = \gamma W E\]
+
+Так как в вычислении управления есть деление на \(\hat b_{M_0}\), на практике необходимо реализовать проецирование этого значение на нижнюю границу \(\bar b_0\), в случае если оно становится меньше ее. 
+Пусть \(\gamma_0 = diag(1, 1, 1, 1)\), тогда если \(\hat b_{M_0} < \bar b_0\), \(\gamma = \gamma_0 - e_{2n} \times e_{2n}^T = diag(1, 1, 1, 0)\). Это предотвращает дальнейшем уменьшение значения параметра и делает моделирование возможным.
+
+На практике лучше брать последний элемент матрицы \(\gamma_0\) на несколько порядков меньше остальных.
+\FloatBarrier
+
+\subsection{Результаты градиентного алгоритма}
+На рисунках \ref{fig:1_epsilon}-\ref{fig:1_u} представлены полученные графики. Как видно, существует субоптимальное значение \(\gamma\), увеличение или уменьшение которого приводит к увеличению времени сходимости. Так же заметно, что время сходимости в целом довольно большое.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.75\textwidth]{tex/images/task1_eps.png}
+  \caption{График ошибки слежения линейного объекта с градиентным алгоритмом при различных параметрах \(\gamma\).} 
+  \label{fig:1_epsilon}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.75\textwidth]{tex/images/task1_psi_p_hat.png}
+  \caption{График нормы вектора оценки параметров линейного объекта с градиентным алгоритмом при различных параметрах \(\gamma\).} 
+  \label{fig:1_psi_p_hat_hat}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.75\textwidth]{tex/images/task1_u.png}
+  \caption{График управления линейного объекта с градиентным алгоритмом при различных параметрах \(\gamma\).} 
+  \label{fig:1_u}
+\end{figure}
+\FloatBarrier
+\newpage
+
+\subsection{Результаты модифицированного алгоритма}
+
+На рисунках \ref{fig:2_epsilon}-\ref{fig:2_u} представлены полученные графики. В легенде к графику указан параметр \(\gamma_k\). Он использовался для вычисления следующим образом:
+\[\gamma_0 = diag(1, 1, 1, 0.01)\]
+\[
+\gamma = 
+\begin{cases}
+  \gamma_0\gamma_k,~~~~~\hat b_{M_0} > \bar b_0 \\
+  (\gamma_0 - 0.01 e_{4} \times e_{4}^T)\gamma_k,~~~~~\hat b_{M_0} > \bar b_0 \\
+\end{cases}\]
+Это реализует логику проецирования в коде и предотвращает деление на 0 в случае, если оценка \(\hat b_{M_0}\) стремится к нему.
+
+
+ Как видно, увеличение \(\gamma\) приводит к уменьшению времени сходимости. Так же заметно, что время сходимости в разы меньше.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.75\textwidth]{tex/images/task2_eps.png}
+  \caption{График ошибки слежения линейного объекта с модифицированным алгоритмом адаптации при различных параметрах \(\gamma\).} 
+  \label{fig:2_epsilon}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.75\textwidth]{tex/images/task2_psi_p_hat.png}
+  \caption{График нормы вектора оценки параметров линейного объекта с модифицированным алгоритмом адаптации при различных параметрах \(\gamma\).} 
+  \label{fig:2_psi_p_hat_hat}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.75\textwidth]{tex/images/task2_u.png}
+  \caption{График управления линейного объекта с модифицированным алгоритмом адаптации при различных параметрах \(\gamma\).} 
+  \label{fig:2_u}
+\end{figure}
+
+\FloatBarrier
+\newpage
+\section{Заключение}
+В работе было исследовано поведение алгоритма адаптивного управления с использованием метода расширенной ошибки и схемы Лайона. Как видно, модификация действительно приводит к качественному улучшению:
+\begin{itemize}
+  \item увеличение \(\gamma\) ведет к уменьшению времени сходимости, что позволяет точнее задавать желаемое поведение;
+  \item в отличии от градиентного алгоритма, нет оптимального значения, благодаря чему отпадает необходимость его искать;
+  \item общее время сходимости уменьшилось в разы;
+  \item ошибка слежения стала меньше;
+  \item \( \varepsilon \rightarrow 0 \) экспоненциально, если PE;
+\end{itemize}
+Из недостатком можно выделить только чуть более высокую вычислительную нагрузку.
+
+
+\end{document}
